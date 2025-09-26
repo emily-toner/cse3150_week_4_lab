@@ -1,0 +1,12 @@
+*.o
+*.out
+*.exe
+
+__pychache__/
+.py
+
+cse3150_week_4_lab_and_hw.pdf
+game_output.csv
+solution
+
+.vscode/
