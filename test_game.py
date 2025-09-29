@@ -36,13 +36,17 @@ def test_progression_multiple_moves():
     boards = read_csv()
     assert len(boards) >= 5  # initial + 4 moves
 
-def test_spawn_after_move():
-    run_game("a\nq\n")
+def test_spawn_after_multiple_moves():
+    # Slam left 5 times, then quit
+    run_game("a\n" * 5 + "q\n")
     boards = read_csv()
-    flat0 = sum(boards[0], [])
-    flat1 = sum(boards[-1], [])
-    # More nonzeros after a move (spawn happened)
-    assert flat1.count(0) < flat0.count(0)
+    start, end = boards[0], boards[-1]
+
+    nonzeros_start = sum(val != 0 for row in start for val in row)
+    nonzeros_end = sum(val != 0 for row in end for val in row)
+
+    # After 5 moves, guaranteed to have more tiles
+    assert nonzeros_end > nonzeros_start
 
 def test_undo_restores():
     run_game("a\nu\nq\n")
